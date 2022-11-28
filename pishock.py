@@ -76,5 +76,46 @@ class PiShock(commands.Cog):
             else:
                 await ctx.send(returnvalue)
                 await ctx.send("operation failed")
-                
+        
+    @ps.command()
+    async def vibrate(self, ctx, duration: str, intensity: str,):
+        """Send some good vibrations, set duration up to 15 seconds and intensity up to 100"""
+        if int(duration) > 15:
+            await ctx.send("Duration must be 15 seconds or less")
+        elif int(intensity) > 100:
+            await ctx.send("Intensity must be 100 or less")
+        else:
+            # set the name variable for the POST request using the name of the bot followed by the user who passed the command
+            self.name = ctx.message.author.name+"swissbot"
+            # send post request to PiShock
+            url = "https://do.pishock.com/api/apioperate"
+            requestobject = {'Username': self.username, 'Name': self.name, 'Code': self.sharecode, 'Intensity': intensity, 'Duration': duration, 'apikey': self.apikey, 'Op': "1"}
+            headers = CaseInsensitiveDict()
+            returnvalue = requests.post(url, json = requestobject)
+            # if the request is successful, equal to 300 send a message to the channel
+            if returnvalue.status_code == 300:
+                await ctx.send("operation successful")
+            else:
+                await ctx.send(returnvalue)
+                await ctx.send("operation failed")
+    
+    @ps.command()
+    async def beep(self, ctx, duration: str):
+        """send a beep and make someone nervous >:3"""
+        if int(duration) > 15:
+            await ctx.send("Duration must be 15 seconds or less")
+        else:
+            # set the name variable for the POST request using the name of the bot followed by the user who passed the command
+            self.name = ctx.message.author.name+"swissbot"
+            # send post request to PiShock
+            url = "https://do.pishock.com/api/apioperate"
+            requestobject = {'Username': self.username, 'Name': self.name, 'Code': self.sharecode, 'Duration': duration, 'apikey': self.apikey, 'Op': "2"}
+            headers = CaseInsensitiveDict()
+            returnvalue = requests.post(url, json = requestobject)
+            # if the request is successful, equal to 300 send a message to the channel
+            if returnvalue.status_code == 300:
+                await ctx.send("operation successful")
+            else:
+                await ctx.send(returnvalue)
+                await ctx.send("operation failed")
     
