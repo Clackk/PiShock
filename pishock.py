@@ -23,20 +23,21 @@ class PiShock(commands.Cog):
     
     @setup.command()
     async def apikey(self, ctx, apikey: str):
-        """Set the API key for PiShock"""
+        """Set the API key for PiShock user"""
         #set variable for apikey
         self.apikey = apikey
         await ctx.send("API key set")
         
     @setup.command()
     async def username(self, ctx, username: str):
-        """Set the username for PiShock"""
+        """Set the username for PiShock user"""
         self.username = username
         await ctx.send("Username set")
         
     @setup.command()
     async def sharecode(self, ctx, sharecode: str):
-        """Set the user sharecode for PiShock"""
+        """Set the user sharecode for PiShock user"""
+    
         self.sharecode = sharecode
         await ctx.send("Sharecode set")
         
@@ -64,6 +65,7 @@ class PiShock(commands.Cog):
             await ctx.send("Intensity must be 100 or less")
         else:
             # set the name variable for the POST request using the name of the bot followed by the user who passed the command
+            # please note, if you implement this bot on your own server, you will need to change the name of the bot to your own
             self.name = ctx.message.author.name+"swissbot"
             # send post request to PiShock
             url = "https://do.pishock.com/api/apioperate"
